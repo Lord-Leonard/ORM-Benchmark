@@ -2,8 +2,10 @@
     "compilerOptions": {
         "lib": [
             "es5",
-            "es6"
+            "es6",
+            "ESNext"
         ],
+        // "strict": true, muss auskommentiert sein für TypeORM
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
