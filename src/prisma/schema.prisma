@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tree{
+  id Int @id @default(autoincrement())
+  point Unsupported("Point")?
+  height Float
+  trunkCircumference Float
+  careState String
+  strikingForLandscape Boolean
+  yearOfPlanting DateTime?
+  cropSize Float
+  juiceAmount Float
+  sponsorSearched Boolean
+  active Boolean
+  species Species @relation(fields: [speciesId],references: [id])
+  speciesId Int
+}
+
+model Species{
+  id Int @id @default(autoincrement())
+  name String
+  trees Tree[]
+}

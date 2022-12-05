@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Tree" ALTER COLUMN "point" DROP NOT NULL;
