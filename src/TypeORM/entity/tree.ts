@@ -1,17 +1,17 @@
 import "reflect-metadata"
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm"
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm"
 import {Point} from "geojson";
-import {SpeciesModel} from "./species.model.js";
+import {Species} from "./species";
 
 @Entity()
-export class TreeModel {
+export class Tree {
   @PrimaryGeneratedColumn()
   id: string
 
-  @Column({ type: "geometry" })
+  @Column({type: "geometry"})
   point: Point;
 
-  @Column()
+  @Column("float")
   height: number;
 
   @Column()
@@ -20,24 +20,24 @@ export class TreeModel {
   @Column()
   careState: string;
 
-  @Column({ default: false })
+  @Column({default: false})
   strikingForLandscape: boolean;
 
-  @Column({type: "timestamp"})
+  @Column("bigint")
   yearOfPlanting: number;
 
-  @Column({type: "double"})
+  @Column()
   cropSize: number;
 
-  @Column({ type: "double"})
+  @Column()
   juiceAmount: number;
 
-  @Column({ default: false })
+  @Column({default: false})
   sponsorSearched: boolean;
 
-  @Column({ default: true })
+  @Column({default: true})
   active: boolean;
 
-  @OneToMany(()=> SpeciesModel, (species)=> species.trees)
-  species: SpeciesModel;
+  @ManyToOne(() => Species, (species) => species.trees)
+  species: Species;
 }

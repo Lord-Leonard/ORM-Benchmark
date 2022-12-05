@@ -1,14 +1,15 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm"
-import {TreeModel} from "./tree.model.js";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm"
+import {Tree} from "./tree";
 
 @Entity()
-export class SpeciesModel {
+export class Species {
   @PrimaryGeneratedColumn()
-  id: number
+  id: string
 
   @Column()
   name: string
 
-  @ManyToOne(()=> TreeModel,(tree)=> tree.species)
-  trees: TreeModel[]
+
+  @OneToMany(() => Tree, (tree) => tree.species)
+  trees: Tree[]
 }
