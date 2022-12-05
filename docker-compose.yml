@@ -1,9 +1,13 @@
-# Use postgres/example user/password credentials
 version: '3.7'
 
 services:
 
   db:
-    image: postgres
+    image: postgis/postgis
+    container_name: postgis
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD: Welcome1!
+      POSTGRES_DB: streuobstportal
+      POSTGRES_USER: root
