@@ -1,18 +1,22 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+  binaryTarget = "native"
+
+  previewFeatures = ["improvedQueryRaw"]
+}
+
+
 model Tree{
   id Int @id @default(autoincrement())
-  point Unsupported("Point")?
+  point Unsupported("geometry(Point, 4326)")?
   height Float
   trunkCircumference Float
   careState String
@@ -24,6 +28,8 @@ model Tree{
   active Boolean
   species Species @relation(fields: [speciesId],references: [id])
   speciesId Int
+
+  @@index([point], name: "location_idx", type: Gist)
 }
 
 model Species{

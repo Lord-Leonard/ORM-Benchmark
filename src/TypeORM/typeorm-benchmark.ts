@@ -4,18 +4,16 @@ import {Tree} from "./entity/tree";
 import {Species} from "./entity/species";
 import {Repository} from "typeorm";
 
-
 let treeRepository: Repository<Tree>
 let speciesRepository: Repository<Species>
 
-const createManyTrees = async (count: number) => {
+const main = async (count: number) => {
   const fCount = count.toLocaleString('de-DE')
 
   const fakeSpecies = new Species()
   fakeSpecies.name = faker.name.firstName()
 
   await speciesRepository.save(fakeSpecies)
-
 
   const fakeTrees: Tree[] = Array.from({length: count}, () => {
     let tree = new Tree()
@@ -43,7 +41,6 @@ const createManyTrees = async (count: number) => {
   console.time(`Create(many) ${fCount} users - TYPEORM`)
   await treeRepository.save(fakeTrees)
   console.timeEnd(`Create(many) ${fCount} users - TYPEORM`)
-
 }
 
 AppDataSource.initialize().then(async () => {
@@ -51,7 +48,7 @@ AppDataSource.initialize().then(async () => {
   speciesRepository = AppDataSource.getRepository(Species)
 
   console.log("start TYPEORM Benchmark")
-  await createManyTrees(5000)
+  await main(5000)
 
 }).catch(error => console.log(error))
 

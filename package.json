@@ -1,8 +1,8 @@
 {
   "type": "commonjs",
   "scripts": {
-    "start": "ts-node src/TypeORM/typeorm-benchmark.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "start-typeorm-benchmark": "ts-node src/TypeORM/typeorm-benchmark.ts",
+    "start-prisma-benchmark": "ts-node src/Prisma/prisma-benchmark.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
