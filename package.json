@@ -1,13 +1,25 @@
 {
   "type": "commonjs",
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/MikroORM/mikro-orm.config.ts",
+      "./build/MikroORM/mikro-orm.config.js"
+    ]
+  },
   "scripts": {
+    "start-MikroORM-benchmark": "ts-node src/MikroORM/index.ts",
+    "start-sequelize-benchmark": "ts-node src/SequelizeORM/sequelize-benchmark.ts",
     "start-typeorm-benchmark": "ts-node src/TypeORM/typeorm-benchmark.ts",
     "start-prisma-benchmark": "ts-node src/Prisma/prisma-benchmark.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@mikro-orm/cli": "^5.5.3",
     "@mikro-orm/core": "^5.5.3",
     "@mikro-orm/postgresql": "^5.5.3",
+    "@mikro-orm/reflection": "^5.5.3",
+    "@mikro-orm/sql-highlighter": "^1.0.1",
     "@prisma/client": "^4.7.1",
     "geojson": "^0.5.0",
     "pg": "^8.8.0",

@@ -2,38 +2,37 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+
+  extensions = [postgis]
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider     = "prisma-client-js"
   binaryTarget = "native"
 
-  previewFeatures = ["improvedQueryRaw"]
+  previewFeatures = ["postgresqlExtensions", "clientExtensions"]
 }
 
-
-model Tree{
-  id Int @id @default(autoincrement())
-  point Unsupported("geometry(Point, 4326)")?
-  height Float
-  trunkCircumference Float
-  careState String
+model Tree {
+  id                   Int                                   @id @default(autoincrement())
+  point                Unsupported("geometry(Point, 4326)")?
+  height               Float
+  trunkCircumference   Float
+  careState            String
   strikingForLandscape Boolean
-  yearOfPlanting DateTime?
-  cropSize Float
-  juiceAmount Float
-  sponsorSearched Boolean
-  active Boolean
-  species Species @relation(fields: [speciesId],references: [id])
-  speciesId Int
-
-  @@index([point], name: "location_idx", type: Gist)
+  yearOfPlanting       DateTime?
+  cropSize             Float
+  juiceAmount          Float
+  sponsorSearched      Boolean
+  active               Boolean
+  species              Species                               @relation(fields: [speciesId], references: [id])
+  speciesId            Int
 }
 
-model Species{
-  id Int @id @default(autoincrement())
-  name String
+model Species {
+  id    Int    @id @default(autoincrement())
+  name  String
   trees Tree[]
 }

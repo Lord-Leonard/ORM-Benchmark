@@ -9,7 +9,6 @@ export class Species {
   @Column()
   name: string
 
-
-  @OneToMany(() => Tree, (tree) => tree.species)
+  @OneToMany('Tree', 'species')
   trees: Tree[]
 }

@@ -6,13 +6,15 @@
             "ESNext"
         ],
         // "strict": true, muss auskommentiert sein für TypeORM
-        "target": "es5",
+        "target": "es6",
         "module": "commonjs",
         "moduleResolution": "node",
+        "sourceRoot": "./src",
         "outDir": "./build",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "declaration": true,
     }
 
 }

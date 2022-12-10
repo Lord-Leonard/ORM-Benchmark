@@ -38,9 +38,9 @@ const main = async (count: number) => {
     return tree
   })
 
-  console.time(`Create(many) ${fCount} users - TYPEORM`)
-  await treeRepository.save(fakeTrees)
-  console.timeEnd(`Create(many) ${fCount} users - TYPEORM`)
+  console.time(`Create(many) ${fCount} trees - TYPEORM`)
+  await treeRepository.save(fakeTrees, { chunk: 5000 })
+  console.timeEnd(`Create(many) ${fCount} trees - TYPEORM`)
 }
 
 AppDataSource.initialize().then(async () => {
@@ -48,10 +48,6 @@ AppDataSource.initialize().then(async () => {
   speciesRepository = AppDataSource.getRepository(Species)
 
   console.log("start TYPEORM Benchmark")
-  await main(5000)
+  await main(10000)
 
 }).catch(error => console.log(error))
-
-
-
-
