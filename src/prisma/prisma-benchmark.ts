@@ -1,29 +1,30 @@
 import {Prisma, PrismaClient} from '@prisma/client'
 import {faker} from '@faker-js/faker'
-import {SingleBar, Presets} from 'cli-progress'
+import {Presets, SingleBar} from 'cli-progress'
 
 const prisma = new PrismaClient()
 
-export async function prismaBenchmark(entityCount, chunkSice, iterations) {
-  const fCount = entityCount.toLocaleString('de-DE')
+export async function prismaBenchmark(entityCount: number, chunkSice: number, iterations: number) {
   const fakeSpecies = await createFakeSpecies();
+  const fakeTreeDataSet = createFakeTreeSet(entityCount, fakeSpecies);
 
-  const treeDataSet = createFakeTreeSet(entityCount, fakeSpecies);
-
-  await writeBenchmark(fCount, iterations, chunkSice, treeDataSet);
+  await writeBenchmark(
+    entityCount.toLocaleString('de-DE'),
+    iterations,
+    chunkSice,
+    fakeTreeDataSet);
 }
 
 async function createFakeSpecies() {
-  const fakeSpecies = await prisma.species.create({
+  return await prisma.species.create({
     data: {
       name: faker.name.firstName()
     }
-  })
-  return fakeSpecies;
+  });
 }
 
 function createFakeTreeSet(entityCount, fakeSpecies) {
-  const treeDataSet = Array.from({length: entityCount}, () => {
+  return Array.from({length: entityCount}, () => {
     return {
       height: faker.datatype.number({min: 1, max: 5, precision: 0.01}),
       trunkCircumference: faker.datatype.number({min: 15, max: 100}),
@@ -49,8 +50,7 @@ function createFakeTreeSet(entityCount, fakeSpecies) {
         })
       ]
     }
-  })
-  return treeDataSet;
+  });
 }
 
 function getValueSql(treeDataSet: { careState: string; juiceAmount: number; species: { connect: { id: any } }; trunkCircumference: number; cropSize: number; active: boolean; sponsorSearched: boolean; point: number[]; height: number; strikingForLandscape: boolean }[]) {
