@@ -8,10 +8,11 @@
     ]
   },
   "scripts": {
+    "start-all-benchmarks": "ts-node-esm src/index.ts",
     "start-MikroORM-benchmark": "ts-node src/MikroORM/index.ts",
     "start-sequelize-benchmark": "ts-node src/SequelizeORM/sequelize-benchmark.ts",
     "start-typeorm-benchmark": "ts-node src/TypeORM/typeorm-benchmark.ts",
-    "start-prisma-benchmark": "ts-node src/Prisma/prisma-benchmark.ts"
+    "start-prisma-benchmark": "ts-node-esm src/Prisma/prisma-benchmark.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -21,17 +22,22 @@
     "@mikro-orm/reflection": "^5.5.3",
     "@mikro-orm/sql-highlighter": "^1.0.1",
     "@prisma/client": "^4.7.1",
+    "cli-progress": "^3.11.2",
     "geojson": "^0.5.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.26.0",
+    "sequelize-typescript": "^2.1.5",
+    "sql-template-tag": "^5.0.3",
     "typeorm": "^0.3.11"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.10",
-    "@types/node": "^18.11.10",
+    "@types/node": "^18.11.13",
+    "@types/validator": "^13.7.10",
     "prisma": "^4.7.1",
+    "sequelize-cli": "^6.5.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"
   }

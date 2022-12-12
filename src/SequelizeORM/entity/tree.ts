@@ -1,32 +1,53 @@
-import {CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, NonAttribute} from "sequelize";
+import {BelongsTo, Column, CreatedAt, ForeignKey, Model, Table, UpdatedAt} from "sequelize-typescript";
 import {Point} from "geojson";
-import {sequelize} from "../data-source";
 import {Species} from "./species";
+import { DataTypes } from "sequelize";
 
-export class Tree extends Model<
-  InferAttributes<Tree>,
-  InferCreationAttributes<Tree>> {
-  declare id: CreationOptional<number>
+@Table
+export class Tree extends Model<Tree> {
+  @Column(DataTypes.GEOMETRY('POINT', 4326))
+  point: Point;
 
-  declare point: Point
-  declare species: NonAttribute<Species>
+  @ForeignKey(() => Species)
+  @Column
+  speciesId!: number;
 
-  //timestamp
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  @BelongsTo(() => Species)
+  species!: Species;
+
+  @Column("float")
+  height!: number;
+
+  @Column
+  trunkCircumference!: number;
+
+  @Column
+  careState!: string;
+
+  @Column
+  strikingForLandscape!: boolean;
+
+  @Column("bigint")
+  yearOfPlanting!: number;
+
+  @Column
+  cropSize!: number;
+
+  @Column
+  juiceAmount!: number;
+
+  @Column
+  sponsorSearched!: boolean;
+
+  @Column
+  active!: boolean;
+
+  @CreatedAt
+  @Column
+  declare createdAt: Date;
+
+  @UpdatedAt
+  @Column
+  declare updatedAt: Date;
+
 }
-
-Tree.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    point: {
-      type: DataTypes.GEOMETRY,
-    },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  }, { sequelize }
-)

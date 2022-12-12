@@ -6,15 +6,23 @@
             "ESNext"
         ],
         // "strict": true, muss auskommentiert sein für TypeORM
-        "target": "es6",
-        "module": "commonjs",
+        "target": "es2017",
+        "module": "esnext",
         "moduleResolution": "node",
         "sourceRoot": "./src",
         "outDir": "./build",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
         "sourceMap": true,
-        "declaration": true,
+        "declaration": true
+    },
+    "include": ["src/**/*.ts"],
+    "ts-node": {
+        "esm": true,
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
     }
-
 }

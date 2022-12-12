@@ -1,32 +1,20 @@
-import {sequelize} from "../data-source";
-import {Association, CreationOptional, DataTypes, Model, NonAttribute} from "sequelize";
-import {Tree} from "./tree"
+import {Column, CreatedAt, HasMany, Model, Table, UpdatedAt} from "sequelize-typescript";
+import {Tree} from "./tree";
 
+@Table
 export class Species extends Model {
-  declare id: CreationOptional<number>;
-  declare name: string;
+  @Column
+  name!: string;
 
-  declare trees?: NonAttribute<Tree[]>
-  
-  // timestamps!
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  @HasMany(() => Tree)
+  trees: Tree[];
 
-  declare static associations: {
-    trees: Association<Species, Tree>;
-  };
+   @CreatedAt
+  @Column
+   declare createdAt: Date;
+
+  @UpdatedAt
+  @Column
+  declare updatedAt: Date;
+
 }
-
-Species.init({
-  id:{
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  name: {
-    type: DataTypes.STRING,
-  },
-}, { sequelize })
-
-Species.hasMany(Tree);

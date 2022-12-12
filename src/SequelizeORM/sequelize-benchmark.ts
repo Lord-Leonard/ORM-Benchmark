@@ -1,31 +1,76 @@
 import {sequelize} from "./data-source";
 import {Species} from "./entity/species";
 import {faker} from "@faker-js/faker";
+import {Tree} from "./entity/tree";
+import {SingleBar, Presets} from 'cli-progress'
+import {Prisma} from "@prisma/client";
 
-async function main(count:number) {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-
-    await sequelize.sync()
-
-    const fakeSepcies = await Species.create({
-      name: faker.name.firstName()
-    })
-
-    console.log(fakeSepcies.get("id"));
-
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
+async function setupSequelizeDb() {
+  await sequelize.authenticate();
+  await sequelize.sync({force: true})
 }
 
-main(1000)
-  .then(async () => {
-    await sequelize.close()
+async function createFakeSpecies() {
+  const fakeSpecies = await Species.create({
+    name: faker.name.firstName()
   })
-.catch(async (e) =>{
-  console.error(e)
-  await sequelize.close()
-  process.exit(1)
-})
+  return fakeSpecies;
+}
+
+function createFakeTreeSet(count: number, fakeSpecies: Species) {
+  const fakeTreesObject = Array.from({length: count}, () => {
+    return {
+      point: {
+        type: "Point",
+        coordinates: [faker.datatype.number({min: -90, max: 90, precision: 0.00001}), faker.datatype.number({
+          min: -180,
+          max: 180,
+          precision: 0.00001
+        })]
+      },
+      height: faker.datatype.number({min: 1, max: 5, precision: 0.01}),
+      trunkCircumference: faker.datatype.number({min: 15, max: 100}),
+      careState: faker.word.noun(),
+      strikingForLandscape: faker.datatype.boolean(),
+      yearOfPlanting: Date.now(),
+      cropSize: faker.datatype.number({min: 5, max: 20}),
+      juiceAmount: faker.datatype.number({min: 1, max: 10}),
+      sponsorSearched: faker.datatype.boolean(),
+      active: faker.datatype.boolean(),
+      speciesId: fakeSpecies.id
+    }
+  })
+  return fakeTreesObject;
+}
+
+export async function sequelizeBenchmark(count: number, iterations: number) {
+  const fCount = count.toLocaleString('de-DE')
+
+  await setupSequelizeDb();
+
+  const fakeSpecies = await createFakeSpecies();
+
+  const fakeTreesObject = createFakeTreeSet(count, fakeSpecies);
+
+  console.log(`Starting the Sequelize Write Benchmark with ${fCount} Entities over ${iterations} iterations`)
+  const progressBar = new SingleBar({}, Presets.shades_classic);
+  progressBar.start(iterations, 0)
+  let totlTime = 0
+
+  for (let i = 0; i < iterations; i++) {
+    let hrstart = process.hrtime()
+
+    // @ts-ignore
+    await Tree.bulkCreate(fakeTreesObject)
+
+    progressBar.update(i+1)
+    let hrend = process.hrtime(hrstart)
+    totlTime += hrend[1]
+  }
+
+  progressBar.stop();
+  console.log(`Sequelize Write Benchmark with ${fCount} Entities over ${iterations} iterations 
+  took a total of ${(totlTime / 1000000).toLocaleString('de-DE')} ms 
+  with an average of ${totlTime / 1000000 / iterations} ms per ${fCount} Entities`)
+
+}

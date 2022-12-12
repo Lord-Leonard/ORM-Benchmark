@@ -4,7 +4,7 @@ import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
 
 export default defineConfig({
   type: 'postgresql',
-  dbName: 'streuobstportal',
+  dbName: 'streuobstportal-Mikro',
   host: "localhost",
   port: 5432,
   user: "root",

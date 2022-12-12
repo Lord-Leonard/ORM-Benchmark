@@ -3,7 +3,7 @@
 
 datasource db {
   provider   = "postgresql"
-  url        = env("DATABASE_URL")
+  url        = env("PRISMA_DATABASE_URL")
 
   extensions = [postgis]
 }
@@ -18,17 +18,17 @@ generator client {
 model Tree {
   id                   Int                                   @id @default(autoincrement())
   point                Unsupported("geometry(Point, 4326)")?
-  height               Float
-  trunkCircumference   Float
-  careState            String
-  strikingForLandscape Boolean
+  height               Float?
+  trunkCircumference   Float?
+  careState            String?
+  strikingForLandscape Boolean?
   yearOfPlanting       DateTime?
-  cropSize             Float
-  juiceAmount          Float
-  sponsorSearched      Boolean
-  active               Boolean
-  species              Species                               @relation(fields: [speciesId], references: [id])
-  speciesId            Int
+  cropSize             Float?
+  juiceAmount          Float?
+  sponsorSearched      Boolean?
+  active               Boolean?
+  species              Species?                               @relation(fields: [speciesId], references: [id])
+  speciesId            Int?
 }
 
 model Species {
