@@ -23,7 +23,6 @@ export async function mikroormBenchmark(count: number, iterations: number) {
 }
 
 async function setupMikroormDb() {
-    const orm = await MikroORM.init(config);
     const client = new Client({
         user: "root",
         password: "root",
@@ -37,6 +36,7 @@ async function setupMikroormDb() {
     } catch (e) {}
     await client.query("CREATE EXTENSION IF NOT EXISTS postgis");
     client.end();
+    const orm = await MikroORM.init(config);
 
     const migrator = orm.getMigrator();
     await migrator.createMigration();
