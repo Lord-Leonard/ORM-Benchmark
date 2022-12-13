@@ -29,12 +29,9 @@ async function setupTypeormDb() {
         password: "root",
         host: "localhost",
         port: 5432,
-        database: "postgres"
+        database: "typeormdb"
     });
     client.connect();
-    try {
-        await client.query("CREATE DATABASE typeormdb")
-    } catch (e) {}
     await client.query("CREATE EXTENSION IF NOT EXISTS postgis");
     client.end();
 
