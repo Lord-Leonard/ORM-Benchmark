@@ -29,9 +29,12 @@ async function setupMikroormDb() {
         password: "root",
         host: "localhost",
         port: 5432,
-        database: "mikrodb"
+        database: "postgres"
     });
     client.connect();
+    try {
+        await client.query("CREATE DATABASE typeormdb")
+    } catch (e) {}
     await client.query("CREATE EXTENSION IF NOT EXISTS postgis");
     client.end();
 

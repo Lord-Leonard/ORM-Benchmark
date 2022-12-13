@@ -34,9 +34,7 @@ async function setupTypeormDb() {
     client.connect();
     try {
         await client.query("CREATE DATABASE typeormdb")
-    } catch (e) {
-
-    }
+    } catch (e) {}
     await client.query("CREATE EXTENSION IF NOT EXISTS postgis");
     client.end();
 
