@@ -32,10 +32,11 @@ async function setupMikroormDb() {
     });
     client.connect();
     try {
-        await client.query("CREATE DATABASE typeormdb")
+        await client.query("CREATE DATABASE mikrodb")
     } catch (e) {}
     await client.query("CREATE EXTENSION IF NOT EXISTS postgis");
     client.end();
+
     const orm = await MikroORM.init(config);
 
     const migrator = orm.getMigrator();
