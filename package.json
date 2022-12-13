@@ -8,12 +8,8 @@
     ]
   },
   "scripts": {
-    "migrate-mikro": "npx mikro-orm schema:update --run",
-    "start-all-benchmarks": "ts-node-esm src/index.ts",
-    "start-MikroORM-benchmark": "ts-node src/MikroORM/index.ts",
-    "start-sequelize-benchmark": "ts-node src/SequelizeORM/sequelize-benchmark.ts",
-    "start-typeorm-benchmark": "ts-node src/TypeORM/typeorm-benchmark.ts",
-    "start-prisma-benchmark": "ts-node-esm src/Prisma/prisma-benchmark.ts"
+    "prestart": "prisma migrate dev --schema src/prisma/schema.prisma",
+    "start": "ts-node-esm src/index.ts",
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

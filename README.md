@@ -1,31 +1,43 @@
 # Setup
 
-1. Start Docker (docker-compose up)
-2. Setup Prisma
-3. Install dependencies (npm i)
+1. Install dependencies (npm i)
+2. Start Database with Docker (docker-compose up)
+3. run Benchmark
+4. Cleanup Database 
 
+---
 
 ## install dependencies
 ```bash
 npm install 
 ```
 
+---
 ## Start Docker
-```bash
+### Linux
+```bash 
 sudo docker-compose up
 ```
 
-## 2. Setup Prisma 
+### Windows
 ```bash
-prisma migrate dev --schema src/prisma/schema.prisma
+docker-compose up
 ```
 
+---
 ## Start Benchmark
 ```bash
-npm run start-all-benchmarks
+npm run start
 ```
 
+---
 ## Stop Docker
+### Linux
 ```bash
 sudo docker-compose down
+```
+
+### Windows 
+```bash
+docker-compose down
 ```

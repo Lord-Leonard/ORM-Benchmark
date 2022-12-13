@@ -15,21 +15,31 @@ async function setupDatabases() {
     client.connect();
     try {
         await client.query("CREATE DATABASE mikrodb");
-        await client.query("CREATE DATABASE typeormdb");
-    } catch (e) {
+    } catch {
     }
+
+    try {
+        await client.query("CREATE DATABASE sequelizedb");
+    } catch {
+    }
+
+    try {
+        await client.query("CREATE DATABASE typeormdb");
+    } catch {
+    }
+
     client.end();
 }
 
 async function main() {
-    let entityCount = 10000
-    let iterations = 50
+    let entityCount = 100
+    let iterations = 5
 
     await setupDatabases();
 
     await prismaBenchmark(entityCount, iterations, 2000)
-    await sequelizeBenchmark(entityCount, iterations)
     await mikroormBenchmark(entityCount, iterations)
+    await sequelizeBenchmark(entityCount, iterations)
     await typeormBenchmark(entityCount, iterations, 2000)
 }
 

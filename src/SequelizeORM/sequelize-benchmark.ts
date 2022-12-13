@@ -1,8 +1,9 @@
-import {sequelize} from "./data-source";
+import {sequelizeOptions} from "./data-source";
 import {Species} from "./entity/species";
 import {faker} from "@faker-js/faker";
 import {Tree} from "./entity/tree";
 import {Presets, SingleBar} from 'cli-progress'
+import {Sequelize, SequelizeOptions} from "sequelize-typescript";
 
 export async function sequelizeBenchmark(count: number, iterations: number) {
   await setupSequelizeDb();
@@ -17,6 +18,7 @@ export async function sequelizeBenchmark(count: number, iterations: number) {
 }
 
 async function setupSequelizeDb() {
+  const sequelize = new Sequelize(sequelizeOptions)
   await sequelize.authenticate();
   await sequelize.query(`CREATE Extension IF NOT EXISTS postgis`)
   await sequelize.sync({force: true})
