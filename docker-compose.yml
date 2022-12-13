@@ -8,9 +8,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: streuobstportal
-      POSTGRES_USER: root
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_MULTIPLE_DATABASES: sequelizedb, prismadb
 #  pgadmin:
 #    container_name: pgadmin4_container
 #    image: dpage/pgadmin4

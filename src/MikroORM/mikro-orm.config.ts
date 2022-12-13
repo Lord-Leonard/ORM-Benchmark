@@ -1,10 +1,10 @@
-import {defineConfig} from "@mikro-orm/core";
+import {} from "@mikro-orm/core";
 import {BaseEntity, Species, Tree} from "./entities";
 import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
+import {defineConfig} from "@mikro-orm/postgresql";
 
 export default defineConfig({
-  type: 'postgresql',
-  dbName: 'streuobstportal-Mikro',
+  dbName: 'mikrodb',
   host: "localhost",
   port: 5432,
   user: "root",

@@ -18,6 +18,7 @@ export async function sequelizeBenchmark(count: number, iterations: number) {
 
 async function setupSequelizeDb() {
   await sequelize.authenticate();
+  await sequelize.query(`CREATE Extension IF NOT EXISTS postgis`)
   await sequelize.sync({force: true})
 }
 

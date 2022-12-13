@@ -1,18 +1,16 @@
 import "reflect-metadata"
-import { DataSource } from "typeorm";
+import {DataSource, DataSourceOptions} from "typeorm";
 import { Tree } from "./entity/tree";
 import {Species} from "./entity/species";
 
-export const AppDataSource = new DataSource({
+export const typeormDatabaseOptions: DataSourceOptions = {
   type: "postgres",
   host: "localhost",
   port: 5432,
   username: "root",
   password: "root",
-  database: "streuobstportal",
+  database: "typeormdb",
   synchronize: true,
   logging: false,
   entities: [Tree, Species],
-  subscribers: [],
-  migrations: [],
-})
+};

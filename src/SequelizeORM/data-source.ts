@@ -4,7 +4,7 @@ import {Species} from "./entity/species";
 import {Tree} from "./entity/tree";
 
 export const sequelize = new Sequelize({
-  database: 'sequelizedb',
+  database: 'postgres',
   dialect : 'postgres',
   username: 'root',
   password: 'root',
